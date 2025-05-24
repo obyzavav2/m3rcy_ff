@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>m3rcy_ff | Программист</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a0a12;
+            --secondary: #161622;
+            --accent: #6c63ff;
+            --accent-dark: #564dff;
+            --text: #f0f0f0;
+            --text-secondary: #b8b8b8;
+            --neon: #00f7ff;
+        }
+        
+        @font-face {
+            font-family: 'JetBrains Mono';
+            src: url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 99, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 247, 255, 0.05) 0%, transparent 20%);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            position: relative;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            border-radius: 50%;
+        }
+        
+        h1 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(108, 99, 255, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+        
+        h1:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .tagline {
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-top: 0;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+        
+        .bio {
+            background: rgba(26, 26, 46, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 0.7s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bio::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 0%,
+                rgba(108, 99, 255, 0.1) 50%,
+                transparent 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 8s infinite linear;
+        }
+        
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.2s forwards;
+        }
+        
+        .skill {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                transparent 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 6s infinite linear;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .skill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(108, 99, 255, 0.4);
+        }
+        
+        .skill:hover::after {
+            opacity: 1;
+        }
+        
+        .projects {
+            background: rgba(26, 26, 46, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 1.5s forwards;
+        }
+        
+        .projects ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .projects li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .projects li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        .contact {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.8s forwards;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            border-radius: 50%;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-link {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .social-link:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .social-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .code-block {
+            background: rgba(15, 15, 21, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            border-left: 3px solid var(--accent);
+            box-shadow: inset 5px 0 15px -5px rgba(108, 99, 255, 0.2);
+        }
+        
+        .comment {
+            color: #6A9955;
+        }
+        
+        .keyword {
+            color: #569CD6;
+        }
+        
+        .string {
+            color: #CE9178;
+        }
+        
+        .function {
+            color: #DCDCAA;
+        } 
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--neon);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            top: -100px;
+            left: -100px;
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--neon);
+            bottom: -50px;
+            right: -50px;
+            animation: float 12s infinite ease-in-out reverse;
+        }
+        
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: #ff6b6b;
+            top: 30%;
+            right: 10%;
+            animation: float 18s infinite ease-in-out 2s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(50px, 50px); }
+            50% { transform: translate(0, 100px); }
+            75% { transform: translate(-50px, 50px); }
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(70%, 70%); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .bio, .projects {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>@m3rcy_ff</h1>
+            <p class="tagline">// студент колледжа & начинающий программист</p>
+        </header>
+        
+        <section class="bio">
+            <h2><span class="keyword">class</span> <span class="function">AboutMe</span> {</h2>
+            <div class="code-block">
+                <span class="comment">/*</span><br>
+                <span class="comment"> * Привет! Я учусь в колледже на программиста</span><br>
+                <span class="comment"> * Активно изучаю современные технологии</span><br>
+                <span class="comment"> * Люблю решать сложные задачи и создавать проекты</span><br>
+                <span class="comment"> */</span><br>
+                <br>
+                <span class="keyword">public</span> <span class="keyword">void</span> <span class="function">MySkills</span>() {<br>
+                &nbsp;&nbsp;Console.<span class="function">WriteLine</span>(<span class="string">"Python, C#, C++"</span>);<br>
+                }<br>
+                <br>
+                <span class="keyword">while</span>(<span class="function">IsLearning</span>()) {<br>
+                &nbsp;&nbsp;<span class="function">Code</span>();<br>
+                &nbsp;&nbsp;<span class="function">Improve</span>();<br>
+                &nbsp;&nbsp;<span class="function">Repeat</span>();<br>
+                }<span class="cursor"></span>
+            </div>
+            <h2>}</h2>
+        </section>
+        
+        <section>
+            <h2><span class="keyword">const</span> <span class="function">skills</span> = [</h2>
+            <div class="skills">
+                <div class="skill">Python</div>
+                <div class="skill">C#</div>
+                <div class="skill">C++</div>
+                <div class="skill">Алгоритмы</div>
+                <div class="skill">ООП</div>
+                <div class="skill">Git</div>
+                <div class="skill">SQL</div>
+                <div class="skill">HTML/CSS</div>
+            </div>
+            <h2>];</h2>
+        </section>
+        
+        <section class="projects">
+            <h2><span class="keyword">interface</span> <span class="function">MyProjects</span> {</h2>
+            <ul>
+                <li>Консольные приложения на C++ (утилиты, алгоритмы)</li>
+                <li>Игры на Python с использованием PyGame</li>
+                <li>GUI приложения на C# (WPF, WinForms)</li>
+                <li>Веб-проекты (HTML, CSS, JavaScript)</li>
+                <li>Учебные проекты по базам данных</li>
+            </ul>
+            <h2>}</h2>
+        </section>
+        
+        <section class="contact">
+            <h2><span class="keyword">export</span> <span class="keyword">default</span> <span class="function">Contacts</span>;</h2>
+            <p>Свяжитесь со мной в Telegram:</p>
+            
+            <div class="social-links">
+                <a href="https://t.me/m3rcy_ff" target="_blank" class="social-link">
+                    <i class="fab fa-telegram"></i> Личный
+                </a>
+                <a href="https://t.me/bydnirazraba" target="_blank" class="social-link">
+                    <i class="fab fa-telegram"></i> Канал
+                </a>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        // Анимация при скролле
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Эффект печатающего текста
+            const codeBlocks = document.querySelectorAll('.code-block');
+            codeBlocks.forEach(block => {
+                const originalText = block.innerHTML;
+                block.innerHTML = '';
+                
+                let i = 0;
+                const speed = 20;
+                
+                function typeWriter() {
+                    if (i < originalText.length) {
+                        block.innerHTML += originalText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    }
+                }
+                
+                setTimeout(typeWriter, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
